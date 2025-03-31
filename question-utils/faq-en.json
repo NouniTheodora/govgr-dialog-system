@@ -1,27 +1,27 @@
 [
     {
-        "id": 0,
-        "question": "How much does the issuance of the transportation card for the disabled cost?",
-        "answer": "It is provided free of charge."
+      "id": 0,
+      "question": "How much does it cost to apply for a Certified Public Accountant license?",
+      "answer": "The procedure is free of charge and does not require any fees or government stamps."
     },
     {
-        "id": 1,
-        "question": "What is the renewal and issuance date?",
-        "answer": "For the renewal and issuance of new transportation card for the disabled, the start date is set as January 23, 2023, and the end date is October 31, 2023."
+      "id": 1,
+      "question": "Who is eligible to submit an application?",
+      "answer": "The application can be submitted by individuals who meet the requirements (degree, internship, exams), either in person or by post, to the SOEL (Body of Chartered Auditors)."
     },
     {
-        "id": 2,
-        "question": "What is the validity period of the transportation card for the disabled ?",
-        "answer": "The card is valid from the date of issuance until December 31, 2023."
+      "id": 2,
+      "question": "What is the validity period of the license?",
+      "answer": "The license is valid indefinitely, unless it is revoked for reasons provided by law."
     },
     {
-        "id": 3,
-        "question": "Is the issuance process of the transportation card for the disabled available digitally?",
-        "answer": "No, it is not available digitally."
+      "id": 3,
+      "question": "Which authority is responsible for granting the license?",
+      "answer": "The license is granted by the Hellenic Accounting and Auditing Standards Oversight Board (ELTE), following a review of the documents and conditions submitted via the Body of Chartered Auditors (SOEL)."
     },
     {
-        "id": 4,
-        "question": "Are there remote service points available?",
-        "answer": "Yes, there are. You can visit https://www.gov.gr/ipiresies/polites-kai-kathemerinoteta/ex-apostaseos-exuperetese-politon/exuperetese-me-telediaskepse-apo-kentro-exupereteses-politon-kep."
+      "id": 4,
+      "question": "How can I submit the application?",
+      "answer": "The application must be submitted either in person or by post to the Body of Chartered Auditors (SOEL). Online submission through a platform is not supported."
     }
-]
+  ]  
