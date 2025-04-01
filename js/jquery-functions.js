@@ -313,21 +313,28 @@ $("document").ready(function () {
       const answer = sessionStorage.getItem("answer_" + i);
       allAnswers.push(answer);
     }
-
+  
     const lang = currentLanguage === "greek" ? "greek" : "english";
-
-    if (allAnswers[0] === "3") return skipToEnd(messages[lang].invalidApplicant);
-    if (allAnswers[1] === "2") return skipToEnd(messages[lang].noExamEU);
-    if (allAnswers[2] === "7") return skipToEnd(messages[lang].noDegree);
-    if (allAnswers[3] !== "1") return skipToEnd(messages[lang].noPractice);
-    if (allAnswers[4] !== "1") return skipToEnd(messages[lang].noHours);
-    if (allAnswers[5] !== "1") return skipToEnd(messages[lang].noExam);
-    if (allAnswers[6] === "4") return skipToEnd(messages[lang].noActivity);
-    if (allAnswers[7] !== "1") return skipToEnd(messages[lang].noInsurance);
-    if (allAnswers[8] === "2") return skipToEnd(messages[lang].convicted);
-
+    const foreign = sessionStorage.getItem("foreign_license") === "true";
+  
+    // Κοινός έλεγχος
+    if (allAnswers[0] === "3") return skipToEnd(messages[lang].invalidApplicant); // ούτε φυσικό πρόσωπο ούτε εταιρεία
+    if (allAnswers[2] === "7") return skipToEnd(messages[lang].noDegree); // χωρίς πτυχίο
+    if (allAnswers[8] === "2") return skipToEnd(messages[lang].convicted); // έχει καταδικαστεί
+  
+    // Ειδικοί έλεγχοι ΜΟΝΟ αν δεν έχει ξένη άδεια
+    if (!foreign) {
+      if (allAnswers[1] === "2") return skipToEnd(messages[lang].noExamEU); // ούτε άδεια ΕΕ
+      if (allAnswers[3] !== "1") return skipToEnd(messages[lang].noPractice);
+      if (allAnswers[4] !== "1") return skipToEnd(messages[lang].noHours);
+      if (allAnswers[5] !== "1") return skipToEnd(messages[lang].noExam);
+      if (allAnswers[6] === "4") return skipToEnd(messages[lang].noActivity);
+      if (allAnswers[7] !== "1") return skipToEnd(messages[lang].noInsurance);
+    }
+  
+    // Αν όλα ΟΚ, προχωράμε
     submitForm();
-  }
+  }  
 
   function submitForm() {
     const resultWrapper = document.createElement("div");
