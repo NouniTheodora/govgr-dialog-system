@@ -9,116 +9,82 @@ $("document").ready(function () {
   var faq;
   var faq_en;
 
-  //hide the form buttons when its necessary
   function hideFormBtns() {
     $("#nextQuestion").hide();
     $("#backButton").hide();
   }
 
-  //Once the form begins, the questions' data and length are fetched.
-  function getQuestions() {
-    return fetch("question-utils/all-questions.json")
-      .then((response) => response.json())
-      .then((data) => {
-        all_questions = data;
-        totalQuestions = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/all-questions-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            all_questions_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch all-questions-en.json:", error);
-
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent =
-              "Error: Failed to fetch all-questions-en.json.";
-            $(".question-container").html(errorMessage);
-
-            hideFormBtns();
-          });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch all-questions:", error);
-
-        // Show error message to the user
+  async function getQuestions() {
+    try {
+      const response = await fetch("question-utils/all-questions.json");
+      const data = await response.json();
+      all_questions = data;
+      totalQuestions = data.length;
+      try {
+        const response_1 = await fetch("question-utils/all-questions-en.json");
+        const dataEn = await response_1.json();
+        all_questions_en = dataEn;
+      } catch (error) {
         const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Error: Failed to fetch all-questions.json.";
+        errorMessage.textContent =
+          "Error: Failed to fetch all-questions-en.json.";
         $(".question-container").html(errorMessage);
 
         hideFormBtns();
-      });
+      }
+    } catch (error_1) {
+      const errorMessage_1 = document.createElement("div");
+      errorMessage_1.textContent = "Error: Failed to fetch all-questions.json.";
+      $(".question-container").html(errorMessage_1);
+
+      hideFormBtns();
+    }
   }
 
-  //Once the form begins, the evidences' data and length are fetched.
-  function getEvidences() {
-    return fetch("question-utils/cpsv.json")
-      .then((response) => response.json())
-      .then((data) => {
-        all_evidences = data;
-        totalEvidences = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/cpsv-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            all_evidences_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch cpsv-en:", error);
-
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent = "Error: Failed to fetch cpsv-en.json.";
-            $(".question-container").html(errorMessage);
-
-            hideFormBtns();
-          });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch cpsv:", error);
-
-        // Show error message to the user
+  async function getEvidences() {
+    try {
+      const response = await fetch("question-utils/cpsv.json");
+      const data = await response.json();
+      all_evidences = data;
+      try {
+        const response_1 = await fetch("question-utils/cpsv-en.json");
+        const dataEn = await response_1.json();
+        all_evidences_en = dataEn;
+      } catch (error) {
         const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Error: Failed to fetch cpsv.json.";
+        errorMessage.textContent = "Error: Failed to fetch cpsv-en.json.";
         $(".question-container").html(errorMessage);
 
         hideFormBtns();
-      });
+      }
+    } catch (error_1) {
+      const errorMessage_1 = document.createElement("div");
+      errorMessage_1.textContent = "Error: Failed to fetch cpsv.json.";
+      $(".question-container").html(errorMessage_1);
+
+      hideFormBtns();
+    }
   }
 
-  //Once the form begins, the faqs' data is fetched.
-  function getFaq() {
-    return fetch("question-utils/faq.json")
-      .then((response) => response.json())
-      .then((data) => {
-        faq = data;
-        totalFaq = data.length;
-
-        // Fetch the second JSON file
-        return fetch("question-utils/faq-en.json")
-          .then((response) => response.json())
-          .then((dataEn) => {
-            faq_en = dataEn;
-          })
-          .catch((error) => {
-            console.error("Failed to fetch faq-en:", error);
-            // Show error message to the user
-            const errorMessage = document.createElement("div");
-            errorMessage.textContent = "Error: Failed to fetch faq-en.json.";
-            $(".question-container").html(errorMessage);
-          });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch faq:", error);
-        // Show error message to the user
+  async function getFaq() {
+    try {
+      const response = await fetch("question-utils/faq.json");
+      const data = await response.json();
+      faq = data;
+      try {
+        const response_1 = await fetch("question-utils/faq-en.json");
+        const dataEn = await response_1.json();
+        faq_en = dataEn;
+      } catch (error) {
         const errorMessage = document.createElement("div");
-        errorMessage.textContent = "Error: Failed to fetch faq.json.";
+        errorMessage.textContent = "Error: Failed to fetch faq-en.json.";
         $(".question-container").html(errorMessage);
-      });
+      }
+    } catch (error_1) {
+      const errorMessage_1 = document.createElement("div");
+      errorMessage_1.textContent = "Error: Failed to fetch faq.json.";
+      $(".question-container").html(errorMessage_1);
+    }
   }
 
   function getEvidencesById(id) {
@@ -142,7 +108,6 @@ $("document").ready(function () {
     }
   }
 
-  //text added in the final result
   function setResult(text) {
     const resultWrapper = document.getElementById("resultWrapper");
     const result = document.createElement("h5");
@@ -193,7 +158,6 @@ $("document").ready(function () {
     $(".faqContainer").html(faqElement);
   }
 
-  // get the url from faqs and link it
   function convertURLsToLinks(text) {
     return text.replace(
       /https:\/\/www\.gov\.gr\/[\S]+/g,
@@ -201,8 +165,6 @@ $("document").ready(function () {
     );
   }
 
-
-  //Εachtime back/next buttons are pressed the form loads a question
   function loadQuestion(questionId, noError) {
     
     $("#nextQuestion").show();
@@ -215,7 +177,6 @@ $("document").ready(function () {
       : (question = all_questions_en[questionId]);
     var questionElement = document.createElement("div");
 
-    //If the user has answered the question (checked a value), no error occurs. Otherwise you get an error (meaning that user needs to answer before he continues to the next question)!
     if (noError) {
       questionElement.innerHTML = `
                 <div class='govgr-field'>
@@ -276,14 +237,7 @@ $("document").ready(function () {
             </div>
         `;
 
-      //The reason for manually updating the components of the <<error>> questionElement is because the
-      //querySelectorAll method works on elements that are already in the DOM (Document Object Model)
       if (currentLanguage === "english") {
-        // Manually update the english format of the last 4 text elements in change-language.js
-        //chooseAnswer: "Choose your answer",
-        //oneAnswer: "You can choose only one option.",
-        //errorAn: "Error:",
-        //choose: "You must choose one option"
         var components = Array.from(
           questionElement.querySelectorAll(".language-component")
         );
@@ -298,17 +252,54 @@ $("document").ready(function () {
     $(".question-container").html(questionElement);
   }
 
-  function skipToEnd(message) {
+  function skipToEnd(reasonMessage) {
     const errorEnd = document.createElement("h5");
     const error =
       currentLanguage === "greek"
-        ? "Λυπούμαστε αλλά δεν δικαιούστε το δελτίο μετακίνησης ΑΜΕΑ!"
-        : "We are sorry but you are not entitled to the transportation card for the disabled!";
+        ? "Δυστυχώς δεν πληροίτε τις προϋποθέσεις για να υποβάλετε αίτηση για άδεια Ορκωτού Ελεγκτή Λογιστή."
+        : "Unfortunately, you do not meet the requirements to apply for the Certified Public Accountant license.";
     errorEnd.className = "govgr-error-summary";
-    errorEnd.textContent = error + " " + message;
+    errorEnd.textContent = error + " " + reasonMessage;
     $(".question-container").html(errorEnd);
     hideFormBtns();
   }
+
+  const rejectionChecks = [
+    { index: 0, value: "3", messageKey: "invalidApplicant" },
+    { index: 1, value: "2", messageKey: "noExamEU" },
+    { index: 2, value: "7", messageKey: "noDegree" },
+    { index: 3, value: "1", mustEqual: true, messageKey: "noPractice" },
+    { index: 4, value: "1", mustEqual: true, messageKey: "noHours" },
+    { index: 5, value: "1", mustEqual: true, messageKey: "noExam" },
+    { index: 6, value: "4", messageKey: "noActivity" },
+    { index: 7, value: "1", mustEqual: true, messageKey: "noInsurance" },
+    { index: 8, value: "2", messageKey: "convicted" }
+  ];
+
+  const messages = {
+    greek: {
+      invalidApplicant: "Η άδεια μπορεί να χορηγηθεί μόνο σε φυσικά πρόσωπα ή ελεγκτικές εταιρείες.",
+      noExamEU: "Για να κάνετε χρήση άδειας άλλου κράτους-μέλους, πρέπει πρώτα να περάσετε τις ειδικές εξετάσεις στην ελληνική γλώσσα.",
+      noDegree: "Πρέπει να διαθέτετε αναγνωρισμένο τίτλο σπουδών οικονομικής κατεύθυνσης.",
+      noPractice: "Απαιτείται τουλάχιστον πενταετής πρακτική άσκηση μέσω του Σ.Ο.Ε.Λ.",
+      noHours: "Απαιτούνται τουλάχιστον 1.000 ώρες ελεγκτικής εμπειρίας ανά έτος.",
+      noExam: "Πρέπει να έχετε περάσει τις επαγγελματικές εξετάσεις του Σ.Ο.Ε.Λ.",
+      noActivity: "Πρέπει να διατηρείτε επαγγελματική δραστηριότητα σχετική με το αντικείμενο.",
+      noInsurance: "Πρέπει να είστε ασφαλισμένος σε κύριο ασφαλιστικό φορέα.",
+      convicted: "Δεν μπορείτε να λάβετε άδεια λόγω τελεσίδικης καταδίκης για σοβαρά ποινικά αδικήματα."
+    },
+    english: {
+      invalidApplicant: "The license can only be granted to individuals or approved audit firms.",
+      noExamEU: "To use a CPA license from another EU country, you must pass the special exams in Greek.",
+      noDegree: "You must hold a recognized degree in economics.",
+      noPractice: "At least 5 years of practical training through SOEL is required.",
+      noHours: "You must have completed at least 1,000 hours of audit experience per year.",
+      noExam: "You must have passed the professional exams conducted by SOEL.",
+      noActivity: "You must have an active professional practice related to auditing.",
+      noInsurance: "You must have active insurance with a primary social security provider.",
+      convicted: "You cannot be licensed due to a final conviction for serious criminal offenses."
+    }
+  };
 
   $("#startBtn").click(function () {
     $("#intro").html("");
@@ -317,147 +308,114 @@ $("document").ready(function () {
   });
 
   function retrieveAnswers() {
-    var allAnswers = [];
-    // currentLanguage === "greek" ? result = "Πρέπει να υποβάλετε id1": result = "You must submit id1";
-
-    getEvidencesById(1);
-    for (var i = 0; i < totalQuestions; i++) {
-      var answer = sessionStorage.getItem("answer_" + i);
+    let allAnswers = [];
+    for (let i = 0; i < totalQuestions; i++) {
+      const answer = sessionStorage.getItem("answer_" + i);
       allAnswers.push(answer);
     }
-    if (allAnswers[0] === "2") {
-      getEvidencesById(9);
-    }
-    if (allAnswers[2] === "4") {
-      getEvidencesById(11);
-    }
-    if (allAnswers[4] === "1") {
-      getEvidencesById(6);
-    } else if (allAnswers[4] === "2") {
-      getEvidencesById(7);
-    } else if (allAnswers[4] === "3") {
-      getEvidencesById(8);
-    }
-    if (
-      allAnswers[5] === "1" ||
-      (allAnswers[5] === "2")
-    ) {
-      getEvidencesById(10);
-      currentLanguage === "greek"
-        ? setResult("Δικαιούται και ο συνοδός το ίδιο δελτίο μετακίνησης.")
-        : setResult("The companion is also entitled with the same transportation card.");
-    }
 
-    if (allAnswers[6] === "2") {
-      getEvidencesById(3);
-      getEvidencesById(4);
-    } else if (allAnswers[6] === "3") {
-      getEvidencesById(3);
-      getEvidencesById(5);
-    }
-    if (allAnswers[7] === "1") {
-      getEvidencesById(12);
-      currentLanguage === "greek"
-      ? setResult(
-          "Δικαιούστε έκπτωση 50% για τις εκτός ορίων της περιφέρειας σας μετακινήσεις με υπεραστικά ΚΤΕΛ."
-        )
-      : setResult(
-          "You are entitled to a 50% discount for transportation outside the boundaries of your region with long-distance bus services (named KTEL)."
-        );
-    } else if (allAnswers[7] === "2" && allAnswers[5] !== "1") {
-      getEvidencesById(2);
-      if (allAnswers[8] === "1") {
-        currentLanguage === "greek"
-          ? setResult(
-              "Δικαιούσαι δωρεάν μετακίνησης με τα αστικά μέσα συγκοινωνίας της περιφέρειας σου και έκπτωση 50% για τις εκτός ορίων της περιφέρειας σου μετακινήσεις με υπεραστικά ΚΤΕΛ."
-            )
-          : setResult(
-              "You are entitled to free transportation with the urban public bus of your region and a 50% discount for transportation outside the boundaries of your region with long-distance (intercity) bus services (named KTEL)."
-            );
-      } else if (allAnswers[8] === "2") {
-        currentLanguage === "greek"
-          ? setResult(
-              "Δικαιούσαι έκπτωση 50% για τις εκτός ορίων της περιφέρειας σου μετακινήσεις με υπεραστικά ΚΤΕΛ."
-            )
-          : setResult(
-              "You are entitled to a 50% discount for transportation outside the boundaries of your region with long-distance bus services (named KTEL)."
-            );
-      }
-    }
-    else if(allAnswers[7] === "2" && allAnswers[5] === "1"){
-      currentLanguage === "greek"
-      ? setResult(
-          "Δικαιούσαι δωρεάν μετακίνησης με τα αστικά μέσα συγκοινωνίας της περιφέρειας σου και έκπτωση 50% για τις εκτός ορίων της περιφέρειας σου μετακινήσεις με υπεραστικά ΚΤΕΛ."
-        )
-      : setResult(
-          "You are entitled to free transportation with the urban public bus of your region and a 50% discount for transportation outside the boundaries of your region with long-distance (intercity) bus services (named KTEL)."
-        );
-    }
+    const lang = currentLanguage === "greek" ? "greek" : "english";
+
+    if (allAnswers[0] === "3") return skipToEnd(messages[lang].invalidApplicant);
+    if (allAnswers[1] === "2") return skipToEnd(messages[lang].noExamEU);
+    if (allAnswers[2] === "7") return skipToEnd(messages[lang].noDegree);
+    if (allAnswers[3] !== "1") return skipToEnd(messages[lang].noPractice);
+    if (allAnswers[4] !== "1") return skipToEnd(messages[lang].noHours);
+    if (allAnswers[5] !== "1") return skipToEnd(messages[lang].noExam);
+    if (allAnswers[6] === "4") return skipToEnd(messages[lang].noActivity);
+    if (allAnswers[7] !== "1") return skipToEnd(messages[lang].noInsurance);
+    if (allAnswers[8] === "2") return skipToEnd(messages[lang].convicted);
+
+    submitForm();
   }
 
   function submitForm() {
     const resultWrapper = document.createElement("div");
     const titleText =
       currentLanguage === "greek"
-        ? "Είστε δικαιούχος!"
+        ? "Είστε επιλέξιμος!"
         : "You are eligible!";
     resultWrapper.innerHTML = `<h1 class='answer'>${titleText}</h1>`;
     resultWrapper.setAttribute("id", "resultWrapper");
     $(".question-container").html(resultWrapper);
-    
+  
+    const docIntroText = currentLanguage === "greek"
+      ? "Τα δικαιολογητικά που πρέπει να προσκομίσετε για να λάβετε την άδεια Ορκωτού Ελεγκτή Λογιστή είναι τα εξής:"
+      : "The documents you need to provide in order to obtain the Certified Public Accountant license are the following:";
+  
+    $(".question-container").append(`<br /><br /><h5 class='answer'>${docIntroText}</h5><br />`);
+  
     const evidenceListElement = document.createElement("ol");
     evidenceListElement.setAttribute("id", "evidences");
-    currentLanguage === "greek"
-      ? $(".question-container").append(
-          "<br /><br /><h5 class='answer'>Τα δικαιολογητικά που πρέπει να προσκομίσετε για να λάβετε το δελτίο μετακίνησης είναι τα εξής:</h5><br />"
-        )
-      : $(".question-container").append(
-          "<br /><br /><h5 class='answer'>The documents you need to provide in order to receive your transportation card are the following:</h5><br />"
-        );
     $(".question-container").append(evidenceListElement);
+
+    const evidenceSource =
+    currentLanguage === "greek" ? all_evidences : all_evidences_en;
+    
+    evidenceSource.PublicService.evidence.forEach((group) => {
+      group.evs.forEach((evsItem) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = evsItem.name;
+        evidenceListElement.appendChild(listItem);
+      });
+    });
+  
+    const followUpText = currentLanguage === "greek"
+      ? "Βεβαιωθείτε ότι προσκομίζετε όλα τα παρακάτω δικαιολογητικά στον φορέα Σ.Ο.Ε.Λ."
+      : "Make sure you submit all the documents bellow to the SOEL authority.";
+    
+    setResult(followUpText);
+
     $("#faqContainer").load("faq.html");
-    retrieveAnswers();
+  
     hideFormBtns();
-  }
+  }  
 
   $("#nextQuestion").click(function () {
     if ($(".govgr-radios__input").is(":checked")) {
-      var selectedRadioButtonIndex =
-        $('input[name="question-option"]').index(
-          $('input[name="question-option"]:checked')
-        ) + 1;
-      console.log(selectedRadioButtonIndex);
-      if (currentQuestion === 0 && selectedRadioButtonIndex === 3) {
-        currentQuestion = -1;
-        currentLanguage === "greek" ? skipToEnd("Μπορείτε να το εκδώσετε ξανά μόνο μια φορά μετά από απώλεια.") : skipToEnd("You can reissue it only one time after loss.");
-      } else if (currentQuestion === 1 && selectedRadioButtonIndex === 2) {
-        currentQuestion = -1;
-        currentLanguage === "greek" ? skipToEnd("Πρέπει να είστε μόνιμος και νόμιμος κάτοικος της Ελλάδας.") : skipToEnd("You must be permanent and legal resident of Greece.");
-      } else if (currentQuestion === 3 && selectedRadioButtonIndex === 2) {
-        currentQuestion = -1;
-        currentLanguage === "greek" ? skipToEnd("Πρέπει να έχετε ποσοστό αναπηρίας 67% και άνω ή να είστε δικαιούχος του επιδόματος ΟΠΕΚΑ.") : skipToEnd("You must have a disability rate of 67% or more or be a beneficiary of the OPEKA benefit.");
-      } else {
-        //save selectedRadioButtonIndex to the storage
-        userAnswers[currentQuestion] = selectedRadioButtonIndex;
-        sessionStorage.setItem(
-          "answer_" + currentQuestion,
-          selectedRadioButtonIndex
-        ); // save answer to session storage
+      const selectedIndex = $('input[name="question-option"]:checked').index('input[name="question-option"]') + 1;
+      userAnswers[currentQuestion] = selectedIndex;
+      sessionStorage.setItem("answer_" + currentQuestion, selectedIndex);
 
-        //if the questions are finished then...
-        if (currentQuestion + 1 == totalQuestions) {
-          submitForm();
-        }
-        // otherwise...
-        else {
-          currentQuestion++;
-          loadQuestion(currentQuestion, true);
-
-          if (currentQuestion + 1 == totalQuestions) {
-            currentLanguage === "greek"
-              ? $(this).text("Υποβολή")
-              : $(this).text("Submit");
+      const lang = currentLanguage === "greek" ? "greek" : "english";
+      for (let check of rejectionChecks) {
+        if (check.index === currentQuestion) {
+          if (
+            (check.mustEqual && String(selectedIndex) !== check.value) ||
+            (!check.mustEqual && String(selectedIndex) === check.value)
+          ) {
+            currentQuestion = -1;
+            skipToEnd(messages[lang][check.messageKey]);
+            return;
           }
+        }
+      }
+
+      if (currentQuestion === 1) {
+        if (selectedIndex === 1) {
+          sessionStorage.setItem("foreign_license", "true");
+        } else {
+          sessionStorage.setItem("foreign_license", "false");
+        }
+      }
+
+      if (
+        sessionStorage.getItem("foreign_license") === "true" &&
+        currentQuestion === 2
+      ) {
+        currentQuestion = 8;
+      } else {
+        currentQuestion++;
+      }
+
+      if (currentQuestion === totalQuestions) {
+        retrieveAnswers();
+      } else {
+        loadQuestion(currentQuestion, true);
+        if (currentQuestion + 1 === totalQuestions) {
+          currentLanguage === "greek"
+            ? $("#nextQuestion").text("Υποβολή")
+            : $("#nextQuestion").text("Submit");
         }
       }
     } else {
@@ -470,7 +428,6 @@ $("document").ready(function () {
       currentQuestion--;
       loadQuestion(currentQuestion, true);
 
-      // Retrieve the answer for the previous question from userAnswers
       var answer = userAnswers[currentQuestion];
       if (answer) {
         $('input[name="question-option"][value="' + answer + '"]').prop(
@@ -484,21 +441,15 @@ $("document").ready(function () {
   $("#languageBtn").click(function () {
     toggleLanguage();
     loadFaqs();
-    // if is false only when the user is skipedToEnd and trying change the language
     if (currentQuestion >= 0 && currentQuestion < totalQuestions - 1)
       loadQuestion(currentQuestion, true);
   });
 
   $("#questions-btns").hide();
 
-  // Get all questions
   getQuestions().then(() => {
-    // Get all evidences
     getEvidences().then(() => {
-      // Get all faqs 
       getFaq().then(() => {
-        // Code inside this block executes only after all data is fetched
-        // load  faqs and the first question on page load
         loadFaqs();
         $("#faqContainer").show();
         loadQuestion(currentQuestion, true);
