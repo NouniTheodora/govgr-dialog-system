@@ -372,9 +372,6 @@ $("document").ready(function () {
       : "Make sure you submit all the documents bellow to the SOEL authority.";
     
     setResult(followUpText);
-
-    $("#faqContainer").load("faq.html");
-  
     hideFormBtns();
   }  
 
