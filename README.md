@@ -17,3 +17,7 @@ The official public service page is available via MITOS:
 - JSON-based dynamic dialog logic
 - Bilingual support (Greek / English)
 
+## Find the live application
+
+https://nounitheodora.github.io/govgr-dialog-system/
+
