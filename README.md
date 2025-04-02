@@ -21,3 +21,5 @@ The official public service page is available via MITOS:
 
 https://nounitheodora.github.io/govgr-dialog-system/
 
+![image](https://github.com/user-attachments/assets/c7b42058-32aa-4322-97ec-11ebc809e93e)
+
